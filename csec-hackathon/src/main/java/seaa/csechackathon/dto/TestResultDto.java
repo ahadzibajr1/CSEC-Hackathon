@@ -7,7 +7,6 @@ public class TestResultDto {
 
     private Boolean sex;
 
-    private Integer diseaseCategory;
 
     private Double glucose;
 
@@ -23,10 +22,9 @@ public class TestResultDto {
 
     private Double ph;
 
-    public TestResultDto(String code, Boolean sex, Integer diseaseCategory, Double glucose, Double urea, Double creatinine, Double potassium, Double sodium, Double crp, Double ph) {
+    public TestResultDto(String code, Boolean sex, Double glucose, Double urea, Double creatinine, Double potassium, Double sodium, Double crp, Double ph) {
         this.code = code;
         this.sex = sex;
-        this.diseaseCategory = diseaseCategory;
         this.glucose = glucose;
         this.urea = urea;
         this.creatinine = creatinine;
@@ -42,7 +40,6 @@ public class TestResultDto {
     public TestResultDto(TestResult testResult) {
         this.code = testResult.getCode();
         this.sex = testResult.getSex();
-        this.diseaseCategory = testResult.getDiseaseCategory();
         this.ph = testResult.getPh();
         this.potassium = testResult.getPotassium();
         this.creatinine = testResult.getCreatinine();
@@ -66,14 +63,6 @@ public class TestResultDto {
 
     public void setSex(Boolean sex) {
         this.sex = sex;
-    }
-
-    public Integer getDiseaseCategory() {
-        return diseaseCategory;
-    }
-
-    public void setDiseaseCategory(Integer diseaseCategory) {
-        this.diseaseCategory = diseaseCategory;
     }
 
     public Double getGlucose() {
