@@ -17,7 +17,7 @@ import seaa.csechackathon.service.JwtService;
 
 import java.io.IOException;
     @RestController
-    @RequestMapping(path="/auth")
+    @RequestMapping(path="/api/auth")
     public class AuthController {
 
         private static final Logger logger = LoggerFactory.getLogger(AuthController.class);

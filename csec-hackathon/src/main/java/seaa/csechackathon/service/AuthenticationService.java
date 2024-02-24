@@ -64,8 +64,6 @@ public class AuthenticationService {
         var role = user.getRole();
         Map<String,Object> roleMap= new HashMap<>();
         roleMap.put("Role",role.getName());
-        roleMap.put("id",user.getId());
-        roleMap.put("firstName",user.getFirstname());
         var jwtToken = jwtService.generateToken(roleMap,user);
         var refreshToken = jwtService.generateRefreshToken(roleMap,user);
         revokeAllUserTokens(user);
@@ -100,8 +98,6 @@ public class AuthenticationService {
             var role = userDetails.getRole();
             Map<String,Object> roleMap= new HashMap<>();
             roleMap.put("Role",role.getName());
-            roleMap.put("id",userDetails.getId());
-            roleMap.put("firstName",userDetails.getFirstname());
             if(jwtService.isTokenValid(refreshToken,userDetails)) {
                 var accessToken = jwtService.generateToken(roleMap,userDetails);
                 revokeAllUserTokens(userDetails);
