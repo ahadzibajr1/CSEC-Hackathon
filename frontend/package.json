@@ -24,7 +24,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "PUBLIC_URL=/seaa build  && cp -R build /var/www/seaa",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
