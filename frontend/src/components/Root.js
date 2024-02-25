@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import LogIn from "./LogIn/LogIn";
 import Forbidden from "./Forbidden";
+import NavBar from "./NavBar";
 
 const Root = () => {
 
@@ -24,7 +25,7 @@ const Root = () => {
         pauseOnHover
       />
       <Router>
-      
+      <NavBar />
 
         <Routes>
 
