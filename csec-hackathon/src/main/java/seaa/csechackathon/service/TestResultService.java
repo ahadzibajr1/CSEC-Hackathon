@@ -38,7 +38,7 @@ public class TestResultService {
     }
 
     public TestResultDto createTestResult(TestResultCreateRequest request) {
-        if (testResultRepository.findByCode(request.getCode()) == null) {
+        if (testResultRepository.findByCode(request.getCode()) != null) {
             throw new IllegalArgumentException(String.format("Test result with code %d already exists!", request.getCode()));
         }
 
