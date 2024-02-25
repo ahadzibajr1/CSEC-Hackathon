@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Menu, Dropdown } from "semantic-ui-react";
 import { useNavigate } from "react-router-dom";
+import { logOut } from "../api/users";
+
 
 import { useStore } from "./LogIn/StoreContext";
 import { logOut } from "../api/users";
