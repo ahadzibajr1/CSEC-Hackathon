@@ -41,6 +41,7 @@ public class TestResultCreateRequest {
     @Min(value = 0, message =  "pH level can not be a negative number!")
     private Double ph;
 
+
     public TestResultCreateRequest(Integer code, Boolean sex, Double glucose, Double urea, Double creatinine, Double potassium, Double sodium, Double crp, Double ph) {
         this.code = code;
         this.sex = sex;

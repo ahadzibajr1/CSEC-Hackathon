@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface TestResultRepository extends JpaRepository<TestResult,Integer> {
     @Query("SELECT tr FROM TestResult tr WHERE tr.code=:code")
-    public List<TestResult> findByCode(Integer code);
+    public TestResult findByCode(Integer code);
 }

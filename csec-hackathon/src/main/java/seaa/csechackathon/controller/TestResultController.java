@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import seaa.csechackathon.dto.TestResultCreateRequest;
 import seaa.csechackathon.dto.TestResultDto;
+import seaa.csechackathon.enums.DiseaseCategory;
 import seaa.csechackathon.enums.Role;
 import seaa.csechackathon.service.JwtService;
 import seaa.csechackathon.service.TestResultService;
@@ -38,5 +39,12 @@ public class TestResultController {
     @PostMapping
     public ResponseEntity<TestResultDto> createTestResult(@Valid @RequestBody TestResultCreateRequest testResultCreateRequest) {
         return ResponseEntity.ok(testResultService.createTestResult(testResultCreateRequest));
+    }
+
+    @PreAuthorize("hasRole('DOCTOR')")
+    @PutMapping
+    public ResponseEntity<TestResultDto> updateTestResultDiseaseCategory(@RequestParam(name="id",required = true) Integer id, @RequestParam(name="target",required = true) Integer diseaseCategory) {
+
+        return ResponseEntity.ok(testResultService.updateTestResult(DiseaseCategory.fromValue(diseaseCategory),id));
     }
 }

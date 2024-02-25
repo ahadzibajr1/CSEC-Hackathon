@@ -12,4 +12,13 @@ public enum DiseaseCategory {
     public int getValue() {
         return value;
     }
+
+    public static DiseaseCategory fromValue(int value) {
+        for (DiseaseCategory status : DiseaseCategory.values()) {
+            if (status.getValue() == value) {
+                return status;
+            }
+        }
+        throw new IllegalArgumentException("Invalid disease category!");
+    }
 }
