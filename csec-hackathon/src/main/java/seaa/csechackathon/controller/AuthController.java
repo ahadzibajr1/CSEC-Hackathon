@@ -47,15 +47,6 @@ import java.io.IOException;
 
         }
 
-        @PostMapping("/refresh-token")
-        public ResponseEntity<AuthResponse> refresh(HttpServletRequest request, HttpServletResponse response) {
-            try {
-                return ResponseEntity.ok(authenticationService.refreshToken(request,response));
-            } catch (IOException e) {
-                logger.error("Failed to refresh token");
-                return (ResponseEntity<AuthResponse>) ResponseEntity.badRequest();
-            }
-        }
 
         @GetMapping("/validate-token")
         public ResponseEntity<String> validateToken(@RequestParam String token) {

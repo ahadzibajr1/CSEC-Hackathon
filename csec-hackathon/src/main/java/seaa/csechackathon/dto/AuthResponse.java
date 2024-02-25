@@ -6,8 +6,7 @@ import seaa.csechackathon.model.User;
 public class AuthResponse  {
     @JsonProperty("accessToken")
     private String accessToken;
-    @JsonProperty("refreshToken")
-    private String refreshToken;
+
     private Integer id;
     private String firstName;
     private String lastName;
@@ -17,9 +16,8 @@ public class AuthResponse  {
     public AuthResponse() {
     }
 
-    public AuthResponse(String accessToken, String refreshToken, User user) {
+    public AuthResponse(String accessToken,  User user) {
         this.accessToken = accessToken;
-        this.refreshToken = refreshToken;
         this.id=user.getId();
         this.firstName = user.getFirstname();
         this.lastName = user.getLastname();

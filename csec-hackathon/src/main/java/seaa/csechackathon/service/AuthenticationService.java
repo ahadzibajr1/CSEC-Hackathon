@@ -65,10 +65,10 @@ public class AuthenticationService {
         Map<String,Object> roleMap= new HashMap<>();
         roleMap.put("Role",role.getName());
         var jwtToken = jwtService.generateToken(roleMap,user);
-        var refreshToken = jwtService.generateRefreshToken(roleMap,user);
+
         revokeAllUserTokens(user);
         saveToken(user, jwtToken);
-        return  new AuthResponse(jwtToken,refreshToken,user);
+        return  new AuthResponse(jwtToken,user);
     }
 
     private void revokeAllUserTokens(User user) {
@@ -82,33 +82,6 @@ public class AuthenticationService {
         tokenRepository.saveAll(validUserTokens);
     }
 
-    public AuthResponse refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final String authHeader = request.getHeader("Authorization");
-        final String refreshToken;
-        final String userEmail;
-        if(authHeader == null || !authHeader.startsWith("Bearer ")) {
-            return null;
-        }
-
-        refreshToken = authHeader.substring(7);
-        userEmail = jwtService.extractUsername(refreshToken);
-
-        if(userEmail!=null) {
-            var userDetails = this.userRepository.findByEmail(userEmail).orElseThrow();
-            var role = userDetails.getRole();
-            Map<String,Object> roleMap= new HashMap<>();
-            roleMap.put("Role",role.getName());
-            if(jwtService.isTokenValid(refreshToken,userDetails)) {
-                var accessToken = jwtService.generateToken(roleMap,userDetails);
-                revokeAllUserTokens(userDetails);
-                saveToken(userDetails, accessToken);
-                var authResponse = new AuthResponse(accessToken,refreshToken,userDetails);
-                return authResponse;
-            }
-        }
-
-        return null;
-    }
 
     public boolean compareHash(String providedPassword, String email) {
         UserDetails userDetails = userRepository.findByEmail(email).orElseThrow();

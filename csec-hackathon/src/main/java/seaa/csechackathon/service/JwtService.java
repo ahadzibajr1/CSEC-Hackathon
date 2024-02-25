@@ -20,7 +20,6 @@ import java.util.function.Function;
 public class JwtService {
     private final String SECRET;
     private final long ACCESS_TOKEN_EXPIRATION;
-    private final long REFRESH_TOKEN_EXPIRATION;
     public String extractUsername(String token) {
         return extractClaim(token,Claims::getSubject);
     }
@@ -34,9 +33,6 @@ public class JwtService {
         return buildToken(extraClaims,userDetails,ACCESS_TOKEN_EXPIRATION);
     }
 
-    public String generateRefreshToken(Map<String,Object> extraClaims, UserDetails userDetails) {
-        return buildToken(extraClaims,userDetails,REFRESH_TOKEN_EXPIRATION);
-    }
 
     private String buildToken(Map<String,Object> extraClaims, UserDetails userDetails, long expiration) {
         return Jwts.builder().
@@ -84,9 +80,8 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public JwtService(@Value("${secret_key}") String secret, @Value("${jwt_expiration}")long accessTokenExpiration, @Value("${refresh_token.expiration}")long refreshTokenExpiration) {
+    public JwtService(@Value("${secret_key}") String secret, @Value("${jwt_expiration}")long accessTokenExpiration) {
         SECRET=secret;
         ACCESS_TOKEN_EXPIRATION = accessTokenExpiration;
-        REFRESH_TOKEN_EXPIRATION = refreshTokenExpiration;
     }
 }
