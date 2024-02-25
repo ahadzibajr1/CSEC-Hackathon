@@ -21,7 +21,7 @@ Ensure you have the following installed on your system:
 - Node.js 16 and npm (Node Package Manager)
 
 ### Backend Setup
-- Clone the SEAA repository from GitHub: *git clone https://github.com/ahadzibajr1/CSEC-Hackathon.git*
+- Clone the main branch of SEAA repository from GitHub: *git clone https://github.com/ahadzibajr1/CSEC-Hackathon.git*
 - Navigate to the backend directory: *cd csec-hackathon*
 - Build and run the backend Spring Boot application: *mvnw spring-boot:run*
 
