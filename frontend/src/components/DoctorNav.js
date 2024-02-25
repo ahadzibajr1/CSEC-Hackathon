@@ -3,6 +3,7 @@ import { Menu, Dropdown } from "semantic-ui-react";
 import { useNavigate } from "react-router-dom";
 
 import { useStore } from "./LogIn/StoreContext";
+import { logOut } from "../api/users";
 
 const DoctorNav = () => {
   const [state, setState] = useState({ activeItem: "" });
@@ -15,6 +16,7 @@ const DoctorNav = () => {
 
   const handleLogOut = async (e, { name }) => {
     setState({ activeItem: name });
+    await logOut();
     localStorage.clear();
     setUser(null);
     navigate("/login");

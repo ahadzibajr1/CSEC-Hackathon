@@ -14,3 +14,8 @@ export const resetPasswordRequest = async (data) => {
   const response = await API.put(`/api/auth/reset-password/request`, data);
   return response.data;
 };
+
+export const logOut = async (data) => {
+  const response = await API.post(`/api/auth/logout`);
+  return response.data;
+};

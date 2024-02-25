@@ -23,6 +23,7 @@ const LabTechnicianNav = () => {
 
   const handleLogOut = async (e, { name }) => {
     setState({ activeItem: name });
+    await logOut();
     localStorage.clear();
     setUser(null);
     navigate("/login");
