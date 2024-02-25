@@ -11,10 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import seaa.csechackathon.dao.UserRepository;
-import seaa.csechackathon.dto.AuthCredentials;
-import seaa.csechackathon.dto.AuthResponse;
-import seaa.csechackathon.dto.ResetPasswordRequest;
-import seaa.csechackathon.dto.ResetPasswordWithTokenRequest;
+import seaa.csechackathon.dto.*;
 import seaa.csechackathon.service.AuthenticationService;
 import seaa.csechackathon.service.JwtService;
 import seaa.csechackathon.service.PasswordResetTokenService;
@@ -107,6 +104,21 @@ import java.io.IOException;
             }
         }
 
+
+        @PutMapping(path="/change-password")
+        public @ResponseBody
+        ResponseEntity<String> changePassword(@Valid  @RequestBody ChangePasswordRequest request, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+
+            var email = jwtService.extractUsername(token.substring(7));
+            if(authenticationService.compareHash(request.getOldPassword(), email)) {
+                authenticationService.changePassword(email,request.getNewPassword());
+                return  ResponseEntity.ok("Successfully changed password");
+            } else {
+                return (ResponseEntity<String>) ResponseEntity
+                        .status(HttpStatus.FORBIDDEN)
+                        .body("Incorrect password!");
+            }
+        }
 
 
 
