@@ -1,22 +1,21 @@
 import axios from "axios";
 
-const apiPort = process.env.REACT_APP_API_PORT;
-const apiBaseUrl = `http://localhost:${apiPort}`;
+const apiBaseUrl = `http://localhost:8080`;
 
-const API = axios.create({
-  baseURL: apiBaseUrl,
-});
+const API = axios.create({});
 
 // Interceptor for adding JWT token to the request headers
-API.interceptors.request.use((config) => {
-  const token = localStorage.getItem("Bearer");
-
-  if (token) {
-    config.headers.authorization = `Bearer ${token}`;
+API.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("Bearer");
+    if (token) {
+      config.headers.authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    throw error;
   }
-  return config;
-}, (error) => {
-  throw error;
-});
+);
 
 export default API;

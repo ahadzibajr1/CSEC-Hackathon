@@ -1,7 +1,5 @@
 import React from "react";
-import {
-  Button,
-} from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
 import styled from "styled-components";
 import * as Yup from "yup";
 import { Form } from "formik-semantic-ui-react";
@@ -11,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import InputField from "../InputField";
 import { toast } from "react-toastify";
 import { useStore } from "./StoreContext";
+import { logIn } from "../../api/users";
+import { jwtDecode } from "jwt-decode";
 
 const StyledTopContainer = styled.div`
   display: flex;
@@ -63,13 +63,13 @@ function LogIn() {
 
   const handleSubmit = async (values) => {
     try {
-      // const token = await logIn(values);
-      // localStorage.setItem("Bearer", token);
-      // if (token && token !== "" && token !== undefined) {
-      //   const response = await getSession();
-      //   setUser(response);
-      //   navigate("/home");
-      // }
+      const token = await logIn(values);
+      localStorage.setItem("Bearer", token.accessToken);
+      if (token && token !== "" && token !== undefined) {
+        const decoded = jwtDecode(token.accessToken);
+        setUser(decoded);
+        navigate("/test-results/all");
+      }
     } catch (err) {
       toast.error("Invalid email or password!");
     }
@@ -86,7 +86,6 @@ function LogIn() {
           <Form>
             <h1>Login to your account</h1>
             <TopInfo>
-
               <InputField
                 label="Email"
                 name="email"
@@ -100,15 +99,10 @@ function LogIn() {
                 type="password"
                 placeholder="***********"
               />
-
             </TopInfo>
 
             <ButtonGroup>
-              <FullWidthButton
-                type="submit"
-                content="Login"
-                color="teal"
-              />
+              <FullWidthButton type="submit" content="Login" color="teal" />
             </ButtonGroup>
           </Form>
         </StyledTopContainer>

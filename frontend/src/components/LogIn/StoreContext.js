@@ -10,7 +10,9 @@ export const StoreProvider = ({ children }) => {
     setUser,
   };
 
-  return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
+  return (
+    <StoreContext.Provider value={value}>{children}</StoreContext.Provider>
+  );
 };
 
 export const useStore = () => {
