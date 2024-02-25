@@ -4,7 +4,6 @@ const apiPort = process.env.REACT_APP_API_PORT;
 const apiBaseUrl = `http://localhost:8080`;
 
 const API = axios.create({
-  baseURL: apiBaseUrl,
 });
 
 // Interceptor for adding JWT token to the request headers
