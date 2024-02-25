@@ -17,19 +17,19 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "firstname", columnDefinition = "VARCHAR(60)")
+    @Column(name = "firstname", columnDefinition = "VARCHAR(60)", nullable = false)
     private String firstname;
 
-    @Column(name = "lastname", columnDefinition = "VARCHAR(60)")
+    @Column(name = "lastname", columnDefinition = "VARCHAR(60)", nullable = false)
     private String lastname;
 
-    @Column(name = "email", unique = true, columnDefinition = "VARCHAR(60)")
+    @Column(name = "email", unique = true, columnDefinition = "VARCHAR(60)", nullable = false)
     private String email;
 
-    @Column(name = "password", columnDefinition = "VARCHAR(60)")
+    @Column(name = "password", columnDefinition = "VARCHAR(60)", nullable = false)
     private String password;
 
     @ManyToOne

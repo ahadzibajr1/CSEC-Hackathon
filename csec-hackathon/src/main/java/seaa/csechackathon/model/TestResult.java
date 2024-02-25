@@ -1,50 +1,51 @@
 package seaa.csechackathon.model;
 
 import jakarta.persistence.*;
+import seaa.csechackathon.dto.TestResultCreateRequest;
 
 @Entity
 public class TestResult {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name="code")
-    private String code;
+    @Column(name="code", nullable = false, unique = true)
+    private Integer code;
 
-    @Column(name="sex")
+    @Column(name="sex", nullable = false)
     private Boolean sex;
 
     @Column(name="disease_category")
     private Integer diseaseCategory;
 
 
-    @Column(name = "glucose")
+    @Column(name = "glucose", nullable = false)
     private Double glucose;
 
-    @Column(name = "urea")
+    @Column(name = "urea", nullable = false)
     private Double urea;
 
-    @Column(name = "creatinine")
+    @Column(name = "creatinine", nullable = false)
     private Double creatinine;
 
-    @Column(name = "potassium")
+    @Column(name = "potassium", nullable = false)
     private Double potassium;
 
-    @Column(name = "sodium")
+    @Column(name = "sodium", nullable = false)
     private Double sodium;
 
-    @Column(name = "crp")
+    @Column(name = "crp", nullable = false)
     private Double crp;
 
-    @Column(name = "ph")
+    @Column(name = "ph", nullable = false)
     private Double ph;
 
 
     public TestResult() {
     }
 
-    public TestResult(Integer id, String code, Boolean sex, Integer diseaseCategory, Double glucose, Double urea, Double creatinine, Double potassium, Double sodium, Double crp, Double ph) {
+    public TestResult(Integer id, Integer code, Boolean sex, Integer diseaseCategory, Double glucose, Double urea, Double creatinine, Double potassium, Double sodium, Double crp, Double ph) {
         this.id = id;
         this.code = code;
         this.sex = sex;
@@ -58,6 +59,18 @@ public class TestResult {
         this.ph = ph;
     }
 
+    public TestResult(TestResultCreateRequest testResultCreateRequest) {
+        this.code = testResultCreateRequest.getCode();
+        this.sex = testResultCreateRequest.getSex();
+        this.glucose = testResultCreateRequest.getGlucose();
+        this.creatinine = testResultCreateRequest.getCreatinine();
+        this.urea = testResultCreateRequest.getUrea();
+        this.ph = testResultCreateRequest.getPh();
+        this.potassium = testResultCreateRequest.getPotassium();
+        this.sodium = testResultCreateRequest.getSodium();
+        this.crp = testResultCreateRequest.getCrp();
+    }
+
     public Integer getId() {
         return id;
     }
@@ -66,11 +79,11 @@ public class TestResult {
         this.id = id;
     }
 
-    public String getCode() {
+    public Integer getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 

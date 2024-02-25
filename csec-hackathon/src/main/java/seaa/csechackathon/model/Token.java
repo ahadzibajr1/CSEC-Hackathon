@@ -7,11 +7,14 @@ import seaa.csechackathon.enums.TokenType;
 public class Token {
     @Id
     @GeneratedValue
+    @Column(nullable = false)
     private Integer id;
 
+    @Column(nullable = false)
     private String token;
 
     @Enumerated
+    @Column(nullable = false)
     private TokenType tokenType;
 
     private boolean expired;
