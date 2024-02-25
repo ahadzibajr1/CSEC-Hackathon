@@ -6,11 +6,11 @@ import { Form } from "formik-semantic-ui-react";
 import { Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 
-import InputField from "../InputField";
 import { toast } from "react-toastify";
-import { useStore } from "./StoreContext";
-import { logIn } from "../../api/users";
+import { useStore } from "./LogIn/StoreContext";
+import { changePassword, logIn } from "../api/users";
 import { jwtDecode } from "jwt-decode";
+import InputField from "./InputField";
 
 const StyledTopContainer = styled.div`
   display: flex;
@@ -19,8 +19,6 @@ const StyledTopContainer = styled.div`
   flex-direction: row;
   gap: 5rem;
   margin-top: 3rem;
-  border: 1px solid lightgrey;
-  border-radius: 8px;
   max-width: fit-content;
   margin-left: auto;
   margin-right: auto;
@@ -45,41 +43,33 @@ const FullWidthButton = styled(Button)`
   width: 100%;
 `;
 
-const ForgotPasswordLink = styled.a`
-  color: red;
-  text-decoration: none;
-  cursor: pointer;
-`;
-
 const initialValues = {
-  email: "",
   password: "",
+  confirmPassword: "",
 };
 
 const validationSchema = Yup.object({
-  email: Yup.string().email("Invalid email address").required("Required"),
-  password: Yup.string()
+  oldPassword: Yup.string().required("Required"),
+  newPassword: Yup.string()
     .min(8, "Must be 8 characters or more")
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
       "Must contain at least one lowercase letter, one uppercase letter, one number, and one special character"
     )
     .required("Required"),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("newPassword"), null], "Passwords must match")
+    .required("Required"),
 });
 
-function LogIn() {
+function ChangePassword() {
   const navigate = useNavigate();
-  const { setUser } = useStore();
 
   const handleSubmit = async (values) => {
     try {
-      const token = await logIn(values);
-      localStorage.setItem("Bearer", token.accessToken);
-      if (token && token !== "" && token !== undefined) {
-        const decoded = jwtDecode(token.accessToken);
-        setUser(decoded);
-        navigate("/test-results/all");
-      }
+      await changePassword(values);
+      toast.success("Password changed");
+      navigate("/test-results/all");
     } catch (err) {
       toast.error("Invalid email or password!");
     }
@@ -94,25 +84,36 @@ function LogIn() {
       {() => (
         <StyledTopContainer>
           <Form>
-            <h1>Login to your account</h1>
+            <h1>Change Password</h1>
             <TopInfo>
               <InputField
-                label="Email"
-                name="email"
-                type="email"
-                placeholder="janedoe@gmail.com"
+                label="Old Password"
+                name="oldPassword"
+                type="password"
+                placeholder="***********"
               />
 
               <InputField
-                label="Password"
-                name="password"
+                label="New Password"
+                name="newPassword"
+                type="password"
+                placeholder="***********"
+              />
+
+              <InputField
+                label="Confirm Password"
+                name="confirmPassword"
                 type="password"
                 placeholder="***********"
               />
             </TopInfo>
 
             <ButtonGroup>
-              <FullWidthButton type="submit" content="Login" color="teal" />
+              <FullWidthButton
+                type="submit"
+                content="Change Password"
+                color="teal"
+              />
             </ButtonGroup>
           </Form>
         </StyledTopContainer>
@@ -121,4 +122,4 @@ function LogIn() {
   );
 }
 
-export default LogIn;
+export default ChangePassword;

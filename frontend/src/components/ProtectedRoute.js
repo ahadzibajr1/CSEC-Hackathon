@@ -5,7 +5,7 @@ import { useStore } from "./LogIn/StoreContext";
 
 const ProtectedRoute = ({ allowedRoles, element }) => {
   const { user } = useStore();
-  const isUserAuthorized = allowedRoles.includes(user?.role);
+  const isUserAuthorized = allowedRoles.includes(user?.Role);
 
   return isUserAuthorized ? element : <Navigate to="/forbidden" />;
 };

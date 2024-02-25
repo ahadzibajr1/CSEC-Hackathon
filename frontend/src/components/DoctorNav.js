@@ -4,14 +4,13 @@ import { useNavigate } from "react-router-dom";
 
 import { useStore } from "./LogIn/StoreContext";
 
-const Nav = () => {
+const DoctorNav = () => {
   const [state, setState] = useState({ activeItem: "" });
   const navigate = useNavigate();
   const { user, setUser } = useStore();
 
   const handleItemClick = (e, { name }) => {
-    setState({ activeItem: name });
-    navigate(name);
+    navigate("/test-results/all");
   };
 
   const handleLogOut = async (e, { name }) => {
@@ -19,6 +18,10 @@ const Nav = () => {
     localStorage.clear();
     setUser(null);
     navigate("/login");
+  };
+
+  const handleChangePassword = (e, { name }) => {
+    navigate("/user/change-password");
   };
 
   const { activeItem } = state;
@@ -36,7 +39,7 @@ const Nav = () => {
             <Dropdown.Item
               name="account"
               active={activeItem === "acount"}
-              onClick={handleItemClick}
+              onClick={handleChangePassword}
             >
               Change Password
             </Dropdown.Item>
@@ -55,4 +58,4 @@ const Nav = () => {
   );
 };
 
-export default Nav;
+export default DoctorNav;

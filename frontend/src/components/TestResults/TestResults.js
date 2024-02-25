@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Button, Container, Icon, Divider, Segment } from "semantic-ui-react";
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { Button, Container, Divider, Icon, Segment } from "semantic-ui-react";
+import styled from "styled-components";
+import { useStore } from "../LogIn/StoreContext";
 
-import Loader from "../Loader";
 import { getTestResults } from "../../api/test-results";
+import Loader from "../Loader";
 import TestResultTable from "./TestResultTable";
 
 const StyledContainer = styled(Container)`
@@ -31,6 +32,7 @@ const TestResults = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
   const navigate = useNavigate();
+  const { user, setUser } = useStore();
 
   useEffect(() => {
     const fetch = async () => {
@@ -46,22 +48,26 @@ const TestResults = () => {
     };
 
     fetch();
-  }, []);
+  }, [setRows]);
 
   return (
     <div>
       <StyledTopContainer>
         <StyledHeader>Test Results</StyledHeader>
-        <Button size="small" onClick={() => navigate("/patients/create")}>
-          <Icon name="plus square outline" />
-          Add Test Result
-        </Button>
+        {user && user.Role === "LAB_TECHNICIAN" ? (
+          <Button size="small" onClick={() => navigate("/test-results/create")}>
+            <Icon name="plus square outline" />
+            Add Test Result
+          </Button>
+        ) : (
+          <></>
+        )}
       </StyledTopContainer>
       <StyledContainer>
         <Divider />
         <Segment basic>
           <Loader isActive={loading} inverted />
-          <TestResultTable rows={rows} error={error} />
+          <TestResultTable rows={rows} error={error} setRows={setRows} />
         </Segment>
       </StyledContainer>
     </div>
