@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import InputField from "../InputField";
 import { toast } from "react-toastify";
 import { useStore } from "./StoreContext";
+import API from "../../api/api";
 
 const StyledTopContainer = styled.div`
   display: flex;
@@ -53,7 +54,7 @@ const initialValues = {
 const validationSchema = Yup.object({
   email: Yup.string().email("Invalid email address").required("Required"),
   password: Yup.string()
-    .min(8, "Must be 8 characters or more")
+    .min(5, "Must be 8 characters or more")
     .required("Required"),
 });
 
@@ -62,17 +63,18 @@ function LogIn() {
   const { setUser } = useStore();
 
   const handleSubmit = async (values) => {
-    try {
-      // const token = await logIn(values);
-      // localStorage.setItem("Bearer", token);
-      // if (token && token !== "" && token !== undefined) {
-      //   const response = await getSession();
-      //   setUser(response);
-      //   navigate("/home");
-      // }
-    } catch (err) {
-      toast.error("Invalid email or password!");
-    }
+    return API
+    .post("/api/auth/login",values)
+    .then((response) => {
+      if (response.status === 200) {
+        console.log(response.data)
+      } else {
+        console.log(values)
+      }
+
+      return response.data;
+    });
+   
   };
 
   return (
